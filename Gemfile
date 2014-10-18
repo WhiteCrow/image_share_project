@@ -14,6 +14,8 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'high_voltage'
 gem 'thin'
+gem 'carrierwave'
+gem 'rmagick'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
@@ -22,5 +24,4 @@ group :development do
 end
 group :development, :test do
   gem 'pry-rails'
-  gem 'pry-rescue'
 end

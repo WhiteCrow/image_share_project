@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner_id: MyString
+  integer: MyString
+  image_id: MyString
+  integer: MyString
+  shared_user_id: 1
+
+two:
+  owner_id: MyString
+  integer: MyString
+  image_id: MyString
+  integer: MyString
+  shared_user_id: 1

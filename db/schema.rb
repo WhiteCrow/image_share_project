@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018092702) do
+ActiveRecord::Schema.define(version: 20141018094916) do
+
+  create_table "images", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "version"
+    t.boolean  "removed",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "avatar"
+  end
+
+  create_table "share_images", force: true do |t|
+    t.integer  "image_id"
+    t.integer  "shared_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
