@@ -1,0 +1,9 @@
+<h3>Deleted Images:</h3>
+<% @images.each do |image| %>
+  <div class="pull-left">
+    <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px' %>
+    <br>
+    <%= link_to "Restore", unremove_image_path(image), method: :post, style: "margin-left: 80px" %>
+    <%= link_to "Fully delete", image, method: :delete, style: "margin-left: 80px" %>
+  </div>
+<% end %>

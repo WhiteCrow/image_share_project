@@ -3,21 +3,59 @@
   <% if current_user %>
     <%= current_user.name %>
   <% end %>
-
 </h3>
 
 <% if current_user %>
-  <%= form_for @image, :html => { :multipart => true } do |f| %>
-    <%= f.label :avatar, 'Upload image:'%>
-    <%= f.file_field :avatar %>
-    <%= f.hidden_field :avatar_cache %>
-    <br />
-    <%= f.submit 'Submit', class: 'btn btn-primary' %>
-  <% end %>
+  <div class="pull-left">
+    <%= form_for @image, :html => { :multipart => true } do |f| %>
+      <%= f.label :avatar, 'Upload image:'%>
+      <%= f.file_field :avatar %>
+      <%= f.hidden_field :avatar_cache %>
+      <br />
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+  <div class="pull-right">
+    <%= link_to removed_images_path do %>
+      <i class="fa fa-trash"></i>
+      Deleted images
+    <% end %>
+  </div>
+
+  <br style="clear: both">
   <h3>Uploaded Files:</h3>
   <br>
-
   <% current_user.images.each do |image| %>
-    <%= image_tag image.avatar.url, style: 'height: 200px; float: left; margin-left: 15px' %>
+    <div class="pull-left">
+      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px' %>
+      <br>
+      <div class="dropdown pull-left", style="margin-left: 18px">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+          Share To:
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <% image.shareable_users.each do |user|%>
+            <li>
+              <%= link_to user.name + (image.shared?(user.id) ? " √" : ""), share_image_path(image, shared_user_id: user.id), method: :post %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <%= link_to "Filters", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
+      <%= link_to "Delete", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
+      <%= link_to "Versions", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
+    </div>
+  <% end %>
+
+  <!-- Shared images by other users -->
+  <br style="clear: both">
+  <br>
+  <h3>Shared images by other users:</h3>
+  <% current_user.was_shared_images.each do |image| %>
+    <div class="pull-left">
+      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px' %>
+      <br>
+    </div>
   <% end %>
 <% end %>
