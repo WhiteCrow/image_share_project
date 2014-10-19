@@ -17,18 +17,20 @@
   </div>
   <div class="pull-right">
     <%= link_to removed_images_path do %>
-      <i class="fa fa-trash"></i>
+      <i class="glyphicon glyphicon-trash" style="font-size: 30px; margin-left: 30px"></i>
+      <br>
       Deleted images
     <% end %>
   </div>
 
   <br style="clear: both">
   <h3>Uploaded Files:</h3>
-  <br>
-  <% current_user.images.each do |image| %>
+  <% current_user.images.last_version.each do |image| %>
     <div class="pull-left">
-      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px' %>
+      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px; margin-top: 30px' %>
       <br>
+
+      <!-- Share -->
       <div class="dropdown pull-left", style="margin-left: 18px">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
           Share To:
@@ -42,9 +44,24 @@
           <% end %>
         </ul>
       </div>
-      <%= link_to "Filters", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
+
+      <!-- Filters -->
+      <div class="dropdown pull-left", style="margin-left: 18px">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+          Filters
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <% AvatarUploader::Filters.each do |filter|%>
+            <li>
+              <%= link_to filter.titleize, effect_image_path(image, filter: filter), method: :post %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <%= link_to "Versions", versions_image_path(image), style: "margin-left: 35px" %>
       <%= link_to "Delete", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
-      <%= link_to "Versions", remove_image_path(image), method: :post, style: "margin-left: 35px" %>
     </div>
   <% end %>
 
@@ -52,9 +69,9 @@
   <br style="clear: both">
   <br>
   <h3>Shared images by other users:</h3>
-  <% current_user.was_shared_images.each do |image| %>
+  <% current_user.was_shared_images.last_version.each do |image| %>
     <div class="pull-left">
-      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px' %>
+      <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px; margin-top: 30px' %>
       <br>
     </div>
   <% end %>

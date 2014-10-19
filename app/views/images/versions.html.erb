@@ -1,0 +1,7 @@
+<h3>All Versions:</h3>
+<% @images.each do |image| %>
+  <div class="pull-left">
+    <%= image_tag image.avatar.url, style: 'height: 200px; margin-left: 15px; margin-top: 30px' %>
+    <br>
+  </div>
+<% end %>

@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :name
 
   def was_shared_images
-    ShareImage.includes(:image).where(shared_user_id: self.id).map(&:image)
+    Image.joins(:share_images).where(share_images: { shared_user_id: self.id })
   end
 end
